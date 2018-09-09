@@ -1,0 +1,143 @@
+@keyframes moving {
+  0%{
+    top: 0px;
+    z-index: -1;
+  }
+  1%{
+    z-index: 2;
+  }
+  100%{
+    top: calc(100% - 25px);
+    z-index: 2;
+  }
+}
+
+.container{
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  box-sizing: border-box;
+  cursor: crosshair;
+  /* cursor: url(/assets/img/bob.png), default; */
+  .game{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-image: url(/assets/img/fundo.jpg);
+    // conter points
+    counter-reset: pontos;
+    .inimigos{
+      left: 9%;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      position: absolute;
+      animation-name: moving;
+      animation-duration: 6s;
+      background-color: white;
+      z-index: -1;
+      animation-fill-mode: backwards;
+    }
+    // inimigos positions
+    #i1{left: 9%; animation-duration: 5s; animation-iteration-count: 2}
+    #i2{left: 15%; animation-duration: 3s; animation-iteration-count: 3}
+    #i3{left: 27%; animation-duration: 4s; animation-iteration-count: 1}
+    #i4{left: 52%; animation-duration: 10s; animation-iteration-count: 1}
+    #i5{left: 67%; animation-duration: 7s; animation-iteration-count: 2}
+    #i6, #i7, #i8, #i9, #i10{
+      background: red;
+      animation-delay: 10s;
+    }
+    // game-Over
+    .game-over{
+      display: none;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      color: white;
+      background: red;
+      z-index: 10;
+    }
+    .inimigos:hover ~ .game-over{
+      display: block;
+    }
+    .game-over:hover{
+      display: block;
+    }
+    /* input[type="checkbox"]{
+      -webkit-appearance: none;
+    } */
+
+    // Win
+    input.coin{
+      left: 9%;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: yellow;
+      position: absolute;
+      -webkit-appearance: none;
+      animation-name: moving;
+      animation-duration: 6s;
+    }
+    #c1{left: 12%; animation-duration: 4s; animation-iteration-count: 1}
+    #c2{left: 18%; animation-duration: 5s; animation-iteration-count: 1}
+    #c3{left: 30%; animation-duration: 3s; animation-iteration-count: 1}
+    #c4{left: 60%; animation-duration: 7s; animation-iteration-count: 1}
+    input.coin:checked{
+      visibility: hidden;
+      // conter pontos
+      counter-increment: pontos;
+    }
+    .game-win{
+      width: 100%;
+      height: 100%;
+      display: none;
+      color: white;
+      position: absolute;
+      background: green;
+      z-index: 15;
+    }
+    #c1:checked ~ #c2:checked ~ #c3:checked ~ #c4:checked ~ .game-win {
+      display: block;
+    }
+
+    // pause
+    #pause-button + label {
+      background-image: url('/assets/img/pause.png');
+    }
+    #pause-button:checked + label {
+      background-image: url('/assets/img/play.png');
+    }
+    #pause-button ~ .inimigos,
+    #pause-button ~ .coin {
+      animation-play-state: running;
+    }
+    #pause-button:checked ~ .inimigos,
+    #pause-button:checked ~ .coin {
+    animation-play-state: paused;
+    }
+    .pause-container {
+      display: none;
+      opacity: 0.7;
+      background-color: black;
+      height: 100%;
+      widows: 100%;
+    }
+    #pause-button:checked ~ .pause-container {
+      display: block;
+    }
+  }
+  // conter points
+  .game::after{
+    color: white;
+    content: counter(pontos) '/4';
+  }
+}
+
+
